@@ -7,7 +7,7 @@ import { DashboardPage } from './pages/DashboardPage';
   return (
     <>
       <Navbar/>
-      <main>
+      <main style={{ padding: '1rem' }}>
         <Routes>
           <Route path="/" element={<RegistrationPage/>}/>
           <Route path="/dashboard" element={<DashboardPage/>}/>
