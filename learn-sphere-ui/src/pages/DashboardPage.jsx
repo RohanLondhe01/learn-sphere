@@ -6,10 +6,10 @@ export const DashboardPage = () => {
     const name=location.state?.name || 'Student'
 
   return (
-    <section>
+    <section style={{ maxWidth: 720, margin: '2rem auto' }}>
         <h2>Welcome, {name}!</h2>
         <p>Your courses will appear here</p>
-        <div>
+        <div style={{ marginTop: '1.5rem' }}>
             <h3>Enrolled courses</h3>
             <ul>
                 <li>Course placeholder 1</li>
@@ -17,7 +17,7 @@ export const DashboardPage = () => {
             </ul>
         </div>
 
-        <div>
+        <div style={{ marginTop: '1.5rem' }}>
             <Link to="/">Back to Registration</Link>
         </div>
     </section>
