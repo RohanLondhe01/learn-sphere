@@ -3,7 +3,7 @@ import { RegistrationPage } from './pages/RegistrationPage';
 import { Footer } from './components/Footer';
 import { DashboardPage } from './pages/DashboardPage';
 
- export default function AppRoutes(){
+ const App = () => {
   return (
     <>
       <Navbar/>
@@ -17,4 +17,5 @@ import { DashboardPage } from './pages/DashboardPage';
       </>
   )
 }
+export default App
 
