@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';import { Navbar } from "./compo
 import { RegistrationPage } from './pages/RegistrationPage';
 import { Footer } from './components/Footer';
 import { DashboardPage } from './pages/DashboardPage';
+import LandingPage from './pages/LandingPage';
 
  export default function AppRoutes(){
   return (
@@ -9,7 +10,8 @@ import { DashboardPage } from './pages/DashboardPage';
       <Navbar/>
       <main style={{ padding: '1rem' }}>
         <Routes>
-          <Route path="/" element={<RegistrationPage/>}/>
+          <Route path="/" element={<LandingPage/>}/>
+          <Route path="/register" element={<RegistrationPage/>}/>
           <Route path="/dashboard" element={<DashboardPage/>}/>
         </Routes>
       </main>
