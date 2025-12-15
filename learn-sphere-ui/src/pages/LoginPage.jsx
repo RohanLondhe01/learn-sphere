@@ -1,47 +1,17 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-export default function LoginPage() {
+export default function LoginPage(){
   const navigate = useNavigate()
-  const inputStyle = { width: '100%', padding: '0.5rem', marginBottom: '0.5rem' }
-  const submit = e => {
-    e.preventDefault()
-    const email = e.currentTarget.email.value
-    navigate('/dashboard', { state: { name: email.split('@')[0] || 'Student' } })
-  }
-
   return (
-    <section style={{ maxWidth: 480, margin: '2rem auto' }}>
+    <form style={{maxWidth:480,margin:'3rem auto'}} onSubmit={e=>{e.preventDefault();navigate('/dashboard',{state:{name:(e.currentTarget.email.value||'Student').split('@')[0]}})}}>
       <h2>Login</h2>
-      <form onSubmit={submit}>
-        <label htmlFor="email">Email</label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          style={inputStyle}
-        />
-
-        <label htmlFor="password">Password</label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          style={inputStyle}
-        />
-
-        <div style={{ marginBottom: '1rem' }}>
-          <a
-            href="#"
-            onClick={e => e.preventDefault()}
-            style={{ color: '#007bff' }}
-          >
-            Forgot password?
-          </a>
-        </div>
-
-        <button type="submit">Sign In</button>
-      </form>
-    </section>
+      <p style={{ margin: 0 }}>Email</p>
+      <input name="email" type="email" placeholder="Email" style={{width:'100%',padding:'0.5rem',margin:'0.5rem 0'}} />
+      <p style={{ margin: 0 }}>Password</p>
+      <input name="password" type="password" placeholder="Password" style={{width:'100%',padding:'0.5rem',margin:'0.5rem 0'}} />
+      <div style={{textAlign:'right'}}><a href="/forgot-password" onClick={e=>e.preventDefault()}>Forgot?</a></div>
+      <button type="submit">Sign In</button>
+    </form>
   )
 }
