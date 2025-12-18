@@ -5,6 +5,7 @@ import { RegistrationPage } from './pages/RegistrationPage';
 import { Footer } from './components/Footer';
 import { DashboardPage } from './pages/DashboardPage';
 import LandingPage from './pages/LandingPage';
+import { Profile } from './pages/Profile';
 
 export default function AppRoutes() {
   return (
@@ -15,6 +16,7 @@ export default function AppRoutes() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/register" element={<RegistrationPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </main>
       <Footer />

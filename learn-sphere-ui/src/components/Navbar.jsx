@@ -29,6 +29,12 @@ export const Navbar = () => {
           >
             Dashboard
           </Link>
+          <Link
+            to="/profile"
+            className="px-3 py-2 rounded-lg font-semibold text-white bg-gradient-to-tr from-indigo-600 to-blue-500 shadow-lg hover:shadow-xl transition"
+          >
+            Profile
+          </Link>
         </div>
       </div>
     </nav>
