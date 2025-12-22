@@ -9,7 +9,7 @@ export const PersonalInfo = () => {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
 
-  // Load from localStorage
+  // 1. Load from localStorage on Initial Mount
   useEffect(() => {
     setName(localStorage.getItem('studentName') || '');
     setDob(localStorage.getItem('studentDob') || '');
@@ -20,7 +20,7 @@ export const PersonalInfo = () => {
     setPassword(localStorage.getItem('studentPassword') || '');
   }, []);
 
-  // Save to localStorage whenever values change
+  // 2. Auto-save to localStorage whenever values change
   useEffect(() => {
     localStorage.setItem('studentName', name);
     localStorage.setItem('studentDob', dob);
@@ -31,99 +31,61 @@ export const PersonalInfo = () => {
     localStorage.setItem('studentPassword', password);
   }, [name, dob, gender, email, country, phone, password]);
 
-  // Shared input style
   const inputStyle = {
     width: '100%',
     padding: '0.5rem',
     marginBottom: '1rem',
     border: '1px solid #ccc',
-    borderRadius: '6px'
+    borderRadius: '6px',
+    boxSizing: 'border-box' // Added to ensure padding doesn't break width
   };
 
   return (
-    <div style={{ marginBottom: '2rem' }}>
-      <h3 style={{ marginBottom: '1rem', color: '#4f46e5' }}>Personal Information</h3>
+    <div style={{ marginBottom: '2rem', maxWidth: '500px' }}>
+      <h3 style={{ marginBottom: '0.5rem', color: '#4f46e5' }}>Personal Information</h3>
+      <p style={{ fontSize: '0.8rem', color: '#666', marginBottom: '1rem' }}>
+        Changes are saved automatically.
+      </p>
 
-      {/* Name */}
       <input 
-        type="text" 
-        placeholder="Full Name" 
-        value={name} 
-        onChange={(e) => setName(e.target.value)} 
-        style={inputStyle}
-        required 
+        type="text" placeholder="Full Name" value={name} 
+        onChange={(e) => setName(e.target.value)} style={inputStyle} 
       />
 
-      {/* Date of Birth */}
       <input 
-        type="date" 
-        value={dob} 
-        onChange={(e) => setDob(e.target.value)} 
-        style={inputStyle}
-        required 
+        type="date" value={dob} 
+        onChange={(e) => setDob(e.target.value)} style={inputStyle} 
       />
 
-      {/* Gender Dropdown */}
-      <select 
-        value={gender} 
-        onChange={(e) => setGender(e.target.value)} 
-        style={inputStyle}
-        required
-      >
+      <select value={gender} onChange={(e) => setGender(e.target.value)} style={inputStyle}>
         <option value="">Select Gender</option>
         <option>Male</option>
         <option>Female</option>
         <option>Other</option>
       </select>
 
-      {/* Email */}
       <input 
-        type="email" 
-        placeholder="Email" 
-        value={email} 
-        onChange={(e) => setEmail(e.target.value)} 
-        style={inputStyle}
-        required 
+        type="email" placeholder="Email" value={email} 
+        onChange={(e) => setEmail(e.target.value)} style={inputStyle} 
       />
 
-      {/* Country Dropdown (before phone) */}
-      <select 
-        value={country} 
-        onChange={(e) => setCountry(e.target.value)} 
-        style={inputStyle}
-        required
-      >
+      <select value={country} onChange={(e) => setCountry(e.target.value)} style={inputStyle}>
         <option value="">Select Country</option>
         <option>India</option>
         <option>USA</option>
         <option>UK</option>
         <option>Canada</option>
-        <option>Australia</option>
       </select>
 
-      {/* Phone (10 digits only) */}
       <input 
-        type="tel" 
-        placeholder="Phone (10 digits)" 
-        value={phone} 
-        onChange={(e) => setPhone(e.target.value)} 
-        pattern="\d{10}" 
-        title="Phone number must be exactly 10 digits" 
-        style={inputStyle}
-        required 
+        type="tel" placeholder="Phone (10 digits)" value={phone} 
+        onChange={(e) => setPhone(e.target.value)} style={inputStyle} 
       />
 
-      {/* Password */}
       <input 
-        type="password" 
-        placeholder="Password (min 8 characters)" 
-        value={password} 
-        onChange={(e) => setPassword(e.target.value)} 
-        minLength={8} 
-        style={inputStyle}
-        required 
+        type="password" placeholder="Password (min 8 characters)" value={password} 
+        onChange={(e) => setPassword(e.target.value)} style={inputStyle} 
       />
     </div>
   );
 };
-
