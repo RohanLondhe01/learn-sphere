@@ -1,24 +1,38 @@
-
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import CourseOverviewPanel from "../components/CourseoverviewPanel/CourseOverviewPanel.jsx";
+
+
 
 export const DashboardPage = () => {
   const location = useLocation();
   const name = location.state?.name || 'Student';
 
+  // Example data (replace with real data/state later)
+  const allCourses = [
+    { id: 2, title: "JavaScript", instructor: "Code with harry" },
+    { id: 1, title: "React Basics", instructor: "chai aur code" },
+    { id: 3, title: ".NET", instructor: " babbar" },
+  ];
+
+  const enrolledCourses = [
+    { id: 2, title: "JavaScript", instructor: "Code with harry" },
+    { id: 1, title: "React Basics", instructor: "chai aur code" },
+  ];
+
   return (
     <section className="mx-auto max-w-3xl px-4 py-10">
+      {/* Greeting */}
       <h2 className="text-2xl font-bold text-[var(--text)]">Welcome, {name}!</h2>
       <p className="mt-2 text-[var(--text)]/80">Your courses will appear here</p>
 
+      
+      {/* New Course Overview Panel */}
       <div className="mt-6 rounded-xl border border-[var(--border)] bg-[var(--card)] p-5">
-        <h3 className="text-lg font-semibold">Enrolled courses</h3>
-        <ul className="mt-2 list-disc list-inside text-[var(--text)]/80 space-y-1">
-          <li>Course placeholder 1</li>
-          <li>Course placeholder 2</li>
-        </ul>
+        <CourseOverviewPanel allCourses={allCourses} enrolledCourses={enrolledCourses} />
       </div>
 
+      {/* Back link */}
       <div className="mt-6">
         <Link
           to="/"
@@ -30,5 +44,5 @@ export const DashboardPage = () => {
     </section>
   );
 };
-``
+
     
