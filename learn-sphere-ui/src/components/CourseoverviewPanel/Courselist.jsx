@@ -1,3 +1,4 @@
+// src/components/CourseoverviewPanel/CourseList.jsx
 import React, { useState } from "react";
 import CourseDetails from "./CourseDetails.jsx";
 
@@ -29,8 +30,6 @@ const CourseList = ({ title, courses, isEnrolled }) => {
             {openCourseId === course.id && (
               <div className="mt-2 pl-4 space-y-2">
                 <p className="text-[var(--text)]/80">{course.instructor}</p>
-
-                {/* Render CourseDetails directly */}
                 <CourseDetails course={course} isEnrolled={isEnrolled} />
               </div>
             )}
@@ -42,6 +41,7 @@ const CourseList = ({ title, courses, isEnrolled }) => {
 };
 
 export default CourseList;
+
 
 
 

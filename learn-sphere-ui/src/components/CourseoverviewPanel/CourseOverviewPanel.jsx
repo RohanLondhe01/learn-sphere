@@ -1,6 +1,6 @@
-// CourseOverviewPanel.jsx
+// src/components/CourseoverviewPanel/CourseOverviewPanel.jsx
 import React, { useState } from "react";
-import CourseList from "./CourseList";
+import CourseList from "./Courselist";
 
 const CourseOverviewPanel = ({ allCourses, enrolledCourses }) => {
   const [showOverview, setShowOverview] = useState(false);
@@ -30,7 +30,6 @@ const CourseOverviewPanel = ({ allCourses, enrolledCourses }) => {
             </button>
             {showAllCourses && (
               <div className="mt-2 pl-4">
-                {/* 👇 Pass isEnrolled = false */}
                 <CourseList courses={allCourses} isEnrolled={false} />
               </div>
             )}
@@ -46,7 +45,6 @@ const CourseOverviewPanel = ({ allCourses, enrolledCourses }) => {
             </button>
             {showEnrolledCourses && (
               <div className="mt-2 pl-4">
-                {/* 👇 Pass isEnrolled = true */}
                 <CourseList courses={enrolledCourses} isEnrolled={true} />
               </div>
             )}
@@ -58,6 +56,7 @@ const CourseOverviewPanel = ({ allCourses, enrolledCourses }) => {
 };
 
 export default CourseOverviewPanel;
+
 
 
 

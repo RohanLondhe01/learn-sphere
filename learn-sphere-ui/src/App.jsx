@@ -6,6 +6,8 @@ import { Footer } from './components/Footer';
 import { DashboardPage } from './pages/DashboardPage';
 import LandingPage from './pages/LandingPage';
 import { Profile } from './pages/Profile';
+import ModulePage from "./components/CourseoverviewPanel/ModulePage";
+import NotEnrolledPage from "./components/CourseoverviewPanel/NotEnrolledPage";
 
 export default function AppRoutes() {
   return (
@@ -13,13 +15,19 @@ export default function AppRoutes() {
       <Navbar />
       <main className="mx-auto max-w-7xl px-4 py-6">
         <Routes>
+          {/* Public routes */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/register" element={<RegistrationPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/profile" element={<Profile />} />
+
+          {/* Course module routes */}
+          <Route path="/course/:courseId/module/:moduleId" element={<ModulePage />} />
+          <Route path="/not-enrolled/:courseId/module/:moduleId" element={<NotEnrolledPage />} />
         </Routes>
       </main>
       <Footer />
     </div>
   );
 }
+
