@@ -1,7 +1,7 @@
 // src/components/CourseoverviewPanel/CourseList.jsx
 import React, { useState } from "react";
 import CourseDetails from "./CourseDetails.jsx";
-
+import ProgressBar from "./ProgressBar.jsx"
 const CourseList = ({ title, courses, isEnrolled }) => {
   const [openCourseId, setOpenCourseId] = useState(null);
 
@@ -24,6 +24,8 @@ const CourseList = ({ title, courses, isEnrolled }) => {
               className="w-full text-left font-semibold text-[var(--text)] hover:brightness-110 transition"
             >
               {openCourseId === course.id ? "▼" : "▶"} {course.title}
+              <ProgressBar percentage={course.progress || 0} />
+              
             </button>
 
             {/* Expanded details */}

@@ -1,6 +1,6 @@
 // src/components/CourseoverviewPanel/CourseOverviewPanel.jsx
 import React, { useState } from "react";
-import CourseList from "./Courselist";
+import CourseList from "./CourseList";
 
 const CourseOverviewPanel = ({ allCourses, enrolledCourses }) => {
   const [showOverview, setShowOverview] = useState(false);
