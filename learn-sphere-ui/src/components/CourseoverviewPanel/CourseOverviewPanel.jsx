@@ -1,4 +1,3 @@
-// src/components/CourseoverviewPanel/CourseOverviewPanel.jsx
 import React, { useState } from "react";
 import CourseList from "./CourseList";
 
@@ -9,7 +8,6 @@ const CourseOverviewPanel = ({ allCourses, enrolledCourses }) => {
 
   return (
     <div className="course-overview-panel">
-      {/* Top-level accordion */}
       <button
         onClick={() => setShowOverview(!showOverview)}
         className="w-full text-left px-4 py-2 rounded bg-[var(--card)] border border-[var(--border)] font-semibold hover:brightness-110 transition"
@@ -17,10 +15,8 @@ const CourseOverviewPanel = ({ allCourses, enrolledCourses }) => {
         {showOverview ? "▼" : "▶"} Course Overview
       </button>
 
-      {/* Expand content */}
       {showOverview && (
         <div className="mt-3 space-y-4 pl-4">
-          {/* Sub-ladder: All Courses */}
           <div>
             <button
               onClick={() => setShowAllCourses(!showAllCourses)}
@@ -35,7 +31,6 @@ const CourseOverviewPanel = ({ allCourses, enrolledCourses }) => {
             )}
           </div>
 
-          {/* Sub-ladder: Enrolled Courses */}
           <div>
             <button
               onClick={() => setShowEnrolledCourses(!showEnrolledCourses)}

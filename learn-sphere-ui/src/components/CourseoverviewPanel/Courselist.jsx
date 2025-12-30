@@ -28,7 +28,6 @@ const CourseList = ({ title, courses, isEnrolled }) => {
               
             </button>
 
-            {/* Expanded details */}
             {openCourseId === course.id && (
               <div className="mt-2 pl-4 space-y-2">
                 <p className="text-[var(--text)]/80">{course.instructor}</p>

@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import CourseOverviewPanel from "../components/CourseoverviewPanel/CourseOverviewPanel.jsx";
-// DELETE THE LINE BELOW (Line 7 in your error)
-// import { enrolledCourses as dataEnrolled } from "../data/courses"; 
 
 export const DashboardPage = () => {
   const location = useLocation();
@@ -14,7 +12,6 @@ export const DashboardPage = () => {
     { id: 3, title: ".NET", instructor: " babbar" },
   ];
 
-  // Define your enrolled courses here with progress percentages
   const enrolledCourses = [
     { id: 2, title: "JavaScript", instructor: "Code with harry", progress: 45 },
     { id: 1, title: "React Basics", instructor: "chai aur code", progress: 100 },
