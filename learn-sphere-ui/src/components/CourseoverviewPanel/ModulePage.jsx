@@ -5,48 +5,41 @@ import ProgressBar from "./ProgressBar.jsx";
 const ModulePage = () => {
   const { moduleId } = useParams();
   const location = useLocation();
-  
   const currentCourse = location.state?.courseData;
 
+  
+//   const [progress,setProgress] = useState(() =>{
+//   const saved = localStorage.getItem(`course_${courseID}_progress`);
+//   return saved ? parseInt(saved) : (location.state?.courseData?.progress || 0);
+// });
+//   const currentCourse = location.state?.courseData;
+//   useEffect(() => {
+//     localStorage.setItem(`course_${courseId}_progress`, progress);
+//   }, [progress, courseId]);
+
+//   const handleComplete = () => {
+//     if (progress < 100) {
+//       setProgress(prev => Math.min(prev + 25, 100)); // Increase by 25% each click
+//     }
+//   };
   return (
-    <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
-      <Link to="/dashboard" style={{ color: '#3b82f6', textDecoration: 'none' }}>
-        ← Back to Dashboard
-      </Link>
-
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center',
-        marginTop: '20px',
-        padding: '20px',
-        border: '1px solid #ddd',
-        borderRadius: '8px'
-      }}>
-        <div>
-          <h1 style={{ margin: 0 }}>{currentCourse?.title || "Course"}</h1>
-          <p style={{ color: '#666' }}>Current: Module {moduleId}</p>
+    <div style={{ padding: '30px' }}>
+      <Link to="/dashboard">← Back</Link>
+      
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
+        <h1>{currentCourse?.title || "Course Content"}</h1>
+        
+        {/* 2. Pass the progress from the suitcase to the ProgressBar */}
+        <div style={{ width: '150px' }}>
+          <ProgressBar percentage={currentCourse?.progress || 0} />
         </div>
-
-        {currentCourse && (
-          <ProgressBar percentage={currentCourse.progress} />
-        )}
       </div>
 
-      <div style={{ 
-        marginTop: '30px', 
-        height: '300px', 
-        border: '2px dashed #ccc', 
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'center',
-        borderRadius: '12px',
-        color: '#999'
-      }}>
-        Video Player Area for Module {moduleId}
+      <div style={{ marginTop: '30px', height: '400px', background: '#b4d8e3ff', borderRadius: '12px' }}>
+        <h2 style={{ margin: 0 }}>Video Content for Module {moduleId}</h2>
+        {/* Video Placeholder */}
       </div>
     </div>
   );
 };
-
 export default ModulePage;
