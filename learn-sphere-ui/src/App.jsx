@@ -6,6 +6,7 @@ import { Footer } from './components/Footer';
 import { DashboardPage } from './pages/DashboardPage';
 import LandingPage from './pages/LandingPage';
 import { Profile } from './pages/Profile';
+import NotificationsList from './components/NotificationsList'; // ✅ add this import
 
 export default function AppRoutes() {
   return (
@@ -17,6 +18,7 @@ export default function AppRoutes() {
           <Route path="/register" element={<RegistrationPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/notifications" element={<NotificationsList />} />
         </Routes>
       </main>
       <Footer />
