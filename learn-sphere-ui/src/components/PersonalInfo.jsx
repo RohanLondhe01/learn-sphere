@@ -1,129 +1,113 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 export const PersonalInfo = () => {
-  const [name, setName] = useState('');
-  const [dob, setDob] = useState('');
-  const [gender, setGender] = useState('');
-  const [email, setEmail] = useState('');
-  const [country, setCountry] = useState('');
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState("");
+  const [dob, setDob] = useState("");
+  const [gender, setGender] = useState("");
+  const [email, setEmail] = useState("");
+  const [country, setCountry] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
 
-  // Load from localStorage
   useEffect(() => {
-    setName(localStorage.getItem('studentName') || '');
-    setDob(localStorage.getItem('studentDob') || '');
-    setGender(localStorage.getItem('studentGender') || '');
-    setEmail(localStorage.getItem('studentEmail') || '');
-    setCountry(localStorage.getItem('studentCountry') || '');
-    setPhone(localStorage.getItem('studentPhone') || '');
-    setPassword(localStorage.getItem('studentPassword') || '');
+    setName(localStorage.getItem("studentName") || "");
+    setDob(localStorage.getItem("studentDob") || "");
+    setGender(localStorage.getItem("studentGender") || "");
+    setEmail(localStorage.getItem("studentEmail") || "");
+    setCountry(localStorage.getItem("studentCountry") || "");
+    setPhone(localStorage.getItem("studentPhone") || "");
+    setPassword(localStorage.getItem("studentPassword") || "");
   }, []);
 
-  // Save to localStorage whenever values change
   useEffect(() => {
-    localStorage.setItem('studentName', name);
-    localStorage.setItem('studentDob', dob);
-    localStorage.setItem('studentGender', gender);
-    localStorage.setItem('studentEmail', email);
-    localStorage.setItem('studentCountry', country);
-    localStorage.setItem('studentPhone', phone);
-    localStorage.setItem('studentPassword', password);
+    localStorage.setItem("studentName", name);
+    localStorage.setItem("studentDob", dob);
+    localStorage.setItem("studentGender", gender);
+    localStorage.setItem("studentEmail", email);
+    localStorage.setItem("studentCountry", country);
+    localStorage.setItem("studentPhone", phone);
+    localStorage.setItem("studentPassword", password);
   }, [name, dob, gender, email, country, phone, password]);
 
-  // Shared input style
-  const inputStyle = {
-    width: '100%',
-    padding: '0.5rem',
-    marginBottom: '1rem',
-    border: '1px solid #ccc',
-    borderRadius: '6px'
-  };
+  const fieldClass =
+    "w-full rounded-md px-3 py-2 mb-3 bg-[var(--card)] border border-[var(--border)] text-[var(--text)]";
 
   return (
-    <div style={{ marginBottom: '2rem' }}>
-      <h3 style={{ marginBottom: '1rem', color: '#4f46e5' }}>Personal Information</h3>
+    <section className="mb-8 max-w-3xl">
+      <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="text-lg font-semibold text-[var(--text)]">
+              Personal Information
+            </h3>
+            <p className="text-sm text-[var(--text)]/80">
+              Changes saved automatically
+            </p>
+          </div>
+        </div>
 
-      {/* Name */}
-      <input 
-        type="text" 
-        placeholder="Full Name" 
-        value={name} 
-        onChange={(e) => setName(e.target.value)} 
-        style={inputStyle}
-        required 
-      />
+        <input
+          type="text"
+          placeholder="Full Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className={fieldClass}
+        />
 
-      {/* Date of Birth */}
-      <input 
-        type="date" 
-        value={dob} 
-        onChange={(e) => setDob(e.target.value)} 
-        style={inputStyle}
-        required 
-      />
+        <input
+          type="date"
+          value={dob}
+          onChange={(e) => setDob(e.target.value)}
+          className={fieldClass}
+        />
 
-      {/* Gender Dropdown */}
-      <select 
-        value={gender} 
-        onChange={(e) => setGender(e.target.value)} 
-        style={inputStyle}
-        required
-      >
-        <option value="">Select Gender</option>
-        <option>Male</option>
-        <option>Female</option>
-        <option>Other</option>
-      </select>
+        <select
+          value={gender}
+          onChange={(e) => setGender(e.target.value)}
+          className={fieldClass}
+        >
+          <option value="">Select Gender</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+        </select>
 
-      {/* Email */}
-      <input 
-        type="email" 
-        placeholder="Email" 
-        value={email} 
-        onChange={(e) => setEmail(e.target.value)} 
-        style={inputStyle}
-        required 
-      />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className={fieldClass}
+        />
 
-      {/* Country Dropdown (before phone) */}
-      <select 
-        value={country} 
-        onChange={(e) => setCountry(e.target.value)} 
-        style={inputStyle}
-        required
-      >
-        <option value="">Select Country</option>
-        <option>India</option>
-        <option>USA</option>
-        <option>UK</option>
-        <option>Canada</option>
-        <option>Australia</option>
-      </select>
+        <select
+          value={country}
+          onChange={(e) => setCountry(e.target.value)}
+          className={fieldClass}
+        >
+          <option value="">Select Country</option>
+          <option>India</option>
+          <option>USA</option>
+          <option>UK</option>
+          <option>Canada</option>
+        </select>
 
-      {/* Phone (10 digits only) */}
-      <input 
-        type="tel" 
-        placeholder="Phone (10 digits)" 
-        value={phone} 
-        onChange={(e) => setPhone(e.target.value)} 
-        pattern="\d{10}" 
-        title="Phone number must be exactly 10 digits" 
-        style={inputStyle}
-        required 
-      />
+        <input
+          type="tel"
+          placeholder="Phone (10 digits)"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          className={fieldClass}
+        />
 
-      {/* Password */}
-      <input 
-        type="password" 
-        placeholder="Password (min 8 characters)" 
-        value={password} 
-        onChange={(e) => setPassword(e.target.value)} 
-        minLength={8} 
-        style={inputStyle}
-        required 
-      />
-    </div>
+        <input
+          type="password"
+          placeholder="Password (min 8 characters)"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className={fieldClass}
+        />
+      </div>
+    </section>
   );
 };
-
