@@ -1,4 +1,4 @@
-// src/components/CourseoverviewPanel/CourseList.jsx
+
 import React, { useState } from "react";
 import CourseDetails from "./CourseDetails.jsx";
 import ProgressBar from "./ProgressBar.jsx"
