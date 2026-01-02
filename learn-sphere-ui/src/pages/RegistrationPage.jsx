@@ -1,14 +1,13 @@
-
-import { RegistrationForm } from '../components/RegistrationForm'
+import { RegistrationForm } from "../components/Registration/RegistrationForm";
 
 export const RegistrationPage = () => {
   return (
     <>
-    <section style={{ maxWidth: 480, margin: '2rem auto' }}>
+      <section style={{ maxWidth: 480, margin: "2rem auto" }}>
         <h2>Student Registration</h2>
         <p>Register to access courses and learning matrials.</p>
-        <RegistrationForm/>
-    </section>
+        <RegistrationForm />
+      </section>
     </>
-  )
-}
+  );
+};

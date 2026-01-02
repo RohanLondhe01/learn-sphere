@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { isEmail, passwordIssues } from "./Validation";
 import { checkDuplicateEmail, registerUser } from "./Api";
-import { InputField } from "./InputField";
+import { InputField } from "../InputField";
 
 export const RegistrationForm = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "" });

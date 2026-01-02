@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { checkDuplicateEmail } from "../components/Api";
+import { checkDuplicateEmail } from "../components/Registration/Api";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
