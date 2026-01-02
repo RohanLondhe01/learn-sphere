@@ -5,10 +5,10 @@ import { Footer } from "./components/Footer";
 import { DashboardPage } from "./pages/DashboardPage";
 import LandingPage from "./pages/LandingPage";
 import { Profile } from "./pages/Profile";
-import NotificationsList from "./components/NotificationsList"; 
-import ModulePage from "./components/Dashboard/ModulePage";
-import NotEnrolledPage from "./components/Dashboard/NotEnrolledPage";
-import { ProtectedRoute } from "./components/Dashboard/ProtectedRoute";
+import NotificationsList from "./components/NotificationsList";
+import ModulePage from "./components/dashboard/ModulePage";
+import NotEnrolledPage from "./components/dashboard/NotEnrolledPage";
+import { ProtectedRoute } from "./components/dashboard/ProtectedRoute";
 import LoginPage from "./pages/LoginPage";
 
 export default function App() {

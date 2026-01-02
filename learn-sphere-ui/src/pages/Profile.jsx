@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { PersonalInfo } from "../components/Profile/PersonalInfo";
-import { PAcademic } from "../components/Profile/PAcademic";
-import { GuardianInfo } from "../components/Profile/GuardianInfo";
+import { PersonalInfo } from "../components/profile/PersonalInfo";
+import { PAcademic } from "../components/profile/PAcademic";
+import { GuardianInfo } from "../components/profile/GuardianInfo";
 
 export const Profile = () => {
   const [editMode, setEditMode] = useState(false);
