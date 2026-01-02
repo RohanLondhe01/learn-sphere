@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
-import CourseOverviewPanel from "../components/CourseoverviewPanel/CourseOverviewPanel.jsx";
-import Sidebar from "../components/Sidebar.jsx";
+import CourseOverviewPanel from "../components/Dashboard/CourseOverviewPanel.jsx";
+import Sidebar from "../components/Dashboard/Sidebar.jsx";
 
 export const DashboardPage = () => {
   const location = useLocation();
