@@ -1,196 +1,162 @@
-import React, { useState } from "react";
+import React, { useState, useSyncExternalStore } from "react";
 import { NavLink } from "react-router-dom";
-
-/**
- * Hover-expand Sidebar (space expands via React hover state)
- * - Fixed on the left; width transitions between w-16 and w-64 while hovered.
- * - Labels/chevrons/submenu reveal only when expanded (hovered).
- * - Uses app theme tokens: bg-[var(--card)], text-[var(--text)], border-[var(--border)].
- * - No changes to other files required.
- */
+import { subscribe, getSnapshot } from "../EnrollmentStore";
 
 export default function Sidebar() {
-  // Expanded while hovering
   const [expanded, setExpanded] = useState(false);
-
-  // Courses submenu (click toggles; only visible when expanded)
   const [coursesOpen, setCoursesOpen] = useState(true);
 
-  // Styles (theme-friendly)
+  const enrolled = useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
+
   const linkBase =
     "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors";
-  const linkActive = "bg-white/10 text-[var(--text)]";
-  const linkInactive = "text-[var(--text)] hover:bg-white/5";
   const navClass = ({ isActive }) =>
-    `${linkBase} ${isActive ? linkActive : linkInactive}`;
+    `${linkBase} ${
+      isActive ? "bg-white/10 text-[var(--text)]" : "text-[var(--text)] hover:bg-white/5"
+    }`;
 
-  // Icons — fixed sizes keep alignment professional
-  const Icon = ({ path, className = "h-5 w-5 shrink-0" }) => (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      aria-hidden="true"
-    >
-      <path d={path} />
-    </svg>
-  );
-
-  const ICONS = {
-    courses: "M3 13h8V3H3v10zM3 21h8v-6H3v6zM13 21h8V11h-8v10zM13 3v6h8V3h-8z",
-    quizzes: "M12 2l3 6h6l-5 4 2 6-6-3-6 3 2-6L3 8h6l3-6z",
-    assignments:
-      "M6 2h8a2 2 0 012 2v16l-4-2-4 2V4a2 2 0 012-2zM8 6h6v2H8zM8 10h8v2H8z",
-    community:
-      "M12 12a5 5 0 100-10 5 5 0 000 10zM2 20c0-3.3 4.5-5 10-5s10 1.7 10 5v1H2v-1z",
-    chevronRight: "M8 5v14l11-7L8 5z",
-  };
-
-  const EXPANDED_W = "w-64"; // 256px space
-  const COLLAPSED_W = "w-16"; // compact bar
-
-  // Label shows only when expanded (hovered)
   const Label = ({ children }) => (
     <span
-      className={[
-        "truncate transition-all duration-200",
-        expanded
-          ? "opacity-100 translate-x-0 inline"
-          : "opacity-0 -translate-x-1 hidden",
-      ].join(" ")}
+      className={`truncate transition-all duration-200 ${
+        expanded ? "inline opacity-100" : "hidden opacity-0"
+      }`}
     >
       {children}
     </span>
   );
 
+  const handleBlur = (e) => {
+    const next = e.relatedTarget;
+    if (!e.currentTarget.contains(next)) setExpanded(false);
+  };
+
   return (
     <>
-      {/* Desktop: fixed, width controlled by hover state */}
       <div
-        className={[
-          "hidden md:block",
-          "fixed left-0 top-0 h-screen z-30", // fixed so width isn't constrained by parent layout
-          "border-r border-[var(--border)] bg-[var(--card)] text-[var(--text)]",
-          // Use transition-all to ensure width animates even if transition-[width] isn't available
-          "transition-all duration-200 overflow-hidden",
-          expanded ? EXPANDED_W : COLLAPSED_W,
-        ].join(" ")}
+        className={`hidden md:block fixed left-0 top-0 h-screen z-30 
+                    border-r border-[var(--border)] bg-[var(--card)] text-[var(--text)]
+                    transition-all duration-200 overflow-hidden ${
+                      expanded ? "w-64" : "w-16"
+                    }`}
         onMouseEnter={() => setExpanded(true)}
         onMouseLeave={() => setExpanded(false)}
+        tabIndex={0}
+        onFocus={() => setExpanded(true)}
+        onBlur={handleBlur}
       >
-        <aside
-          role="complementary"
-          aria-label="Sidebar Navigation"
-          className="flex flex-col h-full"
-        >
-          {/* Header */}
-          <div className="flex items-center justify-between p-3">
-            <div className="flex items-center gap-3">
-              <span className="h-8 w-8 rounded-full bg-gradient-to-tr from-indigo-600 to-blue-500 shadow-sm shrink-0" />
-              <span
-                className={[
-                  "text-sm font-bold tracking-tight",
-                  "bg-gradient-to-r from-blue-400 to-indigo-300 bg-clip-text text-transparent",
-                  expanded
-                    ? "opacity-100 translate-x-0 inline"
-                    : "opacity-0 -translate-x-1 hidden",
-                  "transition-all duration-200",
-                ].join(" ")}
-              >
-                LearnSphere
-              </span>
-            </div>
-            {/* No persistent toggle — hover-only per your requirement */}
+        <aside className="flex flex-col h-full">
+          {/* Logo */}
+          <div className="p-3 flex items-center gap-3">
+            <span className="h-8 w-8 rounded-full bg-gradient-to-tr from-indigo-600 to-blue-500 shadow-sm" />
+            <span
+              className={`text-sm font-bold bg-gradient-to-r from-blue-400 to-indigo-300 
+              bg-clip-text text-transparent transition-all duration-200 ${
+                expanded ? "inline opacity-100" : "hidden opacity-0"
+              }`}
+            >
+              LearnSphere
+            </span>
           </div>
 
-          {/* Navigation */}
-          <nav
-            className="mt-2 flex-1 overflow-auto ml-2"
-            aria-label="Main navigation"
-          >
+          <nav className="mt-2 flex-1 overflow-auto ml-2" aria-label="Main navigation">
             <ul className="space-y-1">
-              {/* Courses (parent) */}
+              {/* Courses */}
               <li>
                 <button
                   onClick={() => setCoursesOpen((s) => !s)}
-                  className={`w-full ${linkBase} ${linkInactive} justify-between`}
+                  className={`${linkBase} text-[var(--text)] hover:bg-white/5 w-full justify-between`}
                   aria-expanded={coursesOpen}
+                  aria-controls="courses-submenu"
                 >
                   <span className="flex items-center gap-3">
-                    <Icon path={ICONS.courses} />
+                    <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M3 13h8V3H3v10zM3 21h8v-6H3v6zM13 21h8V11h-8v10zM13 3v6h8V3h-8z" />
+                    </svg>
                     <Label>Courses</Label>
                   </span>
 
-                  {/* Chevron visible only when expanded */}
-                  <span
-                    className={[
-                      "transition-transform duration-200",
-                      coursesOpen ? "rotate-90" : "rotate-0",
-                      expanded ? "opacity-100 inline" : "opacity-0 hidden",
-                    ].join(" ")}
-                  >
-                    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none">
-                      <path d={ICONS.chevronRight} fill="currentColor" />
-                    </svg>
-                  </span>
+                  {expanded && (
+                    <span className="flex items-center gap-2">
+                      <span className="text-xs bg-white/10 px-2 py-[2px] rounded">
+                        {enrolled.length}
+                      </span>
+                      <svg
+                        className={`h-4 w-4 transition-transform ${
+                          coursesOpen ? "rotate-90" : "rotate-0"
+                        }`}
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path d="M8 5v14l11-7L8 5z" />
+                      </svg>
+                    </span>
+                  )}
                 </button>
 
-                {/* Submenu — renders only when expanded AND coursesOpen */}
                 {expanded && coursesOpen && (
-                  <div className="mt-2 pl-2 pr-2">
+                  <div id="courses-submenu" className="mt-2 pl-2 pr-2">
                     <ul className="space-y-1">
                       <li>
                         <NavLink to="/my-courses" className={navClass}>
-                          <span className="text-[0.95rem]">My Courses</span>
+                          <span>My Courses</span>
                         </NavLink>
                       </li>
                       <li>
                         <NavLink to="/enrolled-courses" className={navClass}>
-                          <span className="text-[0.95rem]">
-                            Enrolled Courses
-                          </span>
+                          <span>Enrolled Courses</span>
                         </NavLink>
                       </li>
                     </ul>
+
+                    {/* Dynamic enrolled course list */}
+                    <div className="mt-3 border-t border-[var(--border)] pt-2">
+                      <p className="text-xs opacity-70 px-3">Enrolled</p>
+
+                      {enrolled.length > 0 ? (
+                        <ul className="mt-1 space-y-1">
+                          {enrolled.map((e) => (
+                            <li key={e.id}>
+                              <NavLink
+                                to={`/course/${e.id}`}
+                                className={navClass}
+                                title={e.title}
+                              >
+                                <span className="truncate">{e.title}</span>
+                              </NavLink>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p className="text-xs opacity-60 px-3 mt-1">No enrolled courses</p>
+                      )}
+                    </div>
                   </div>
                 )}
               </li>
 
-              {/* Quizzes */}
+              {/* Other main links */}
               <li>
                 <NavLink to="/quizzes" className={navClass}>
-                  <Icon path={ICONS.quizzes} />
                   <Label>Quizzes</Label>
                 </NavLink>
               </li>
 
-              {/* Assignments */}
               <li>
                 <NavLink to="/assignments" className={navClass}>
-                  <Icon path={ICONS.assignments} />
                   <Label>Assignments</Label>
                 </NavLink>
               </li>
 
-              {/* Community Help */}
               <li>
                 <NavLink to="/community" className={navClass}>
-                  <Icon path={ICONS.community} />
                   <Label>Community Help</Label>
                 </NavLink>
               </li>
             </ul>
           </nav>
-
-          {/* Footer — only when expanded */}
-          {/* {expanded && (
-            <div className="mt-4 text-xs opacity-80">v0.1 • Sidebar</div>
-          )} */}
         </aside>
       </div>
-
-      {/* Mobile drawer: (optional) remove if not needed */}
-      {/* This answer focuses on desktop hover behavior as requested. */}
     </>
   );
 }

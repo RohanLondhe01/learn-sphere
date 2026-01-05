@@ -15,6 +15,8 @@ import AdminProfile from "./pages/admin/AdminProfile";
 import LoginPage from "./pages/LoginPage";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import EnrolledCourses from "./pages/EnrolledCourses";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function App() {
   return (
@@ -31,6 +33,7 @@ export default function App() {
           {/* <Route path="/dashboard" element={<DashboardPage />} /> */}
           <Route path="/profile" element={<Profile />} />
           <Route path="/notifications" element={<NotificationsList />} />
+          <Route path="/enrolled-courses" element={<EnrolledCourses />} />
 
           {/* Course module routes */}
           <Route
