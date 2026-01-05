@@ -56,8 +56,3 @@ const CourseOverviewPanel = ({ allCourses, enrolledCourses }) => {
 };
 
 export default CourseOverviewPanel;
-
-
-
-
-

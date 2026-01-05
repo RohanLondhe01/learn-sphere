@@ -47,22 +47,8 @@ export const Navbar = () => {
 
         {/* Actions: show only Register/Login when logged out; Notifications/Profile when logged in */}
         <div className="flex items-center gap-3">
-          <Link
-            to="/about"
-            className="hidden md:inline px-3 py-2 text-sm hover:underline"
-          >
-            About
-          </Link>
           {user ? (
             <>
-              {user.role === "admin" && (
-                <Link
-                  to="/admin"
-                  className="px-3 py-2 rounded-lg font-semibold border border-[var(--border)] bg-[var(--card)] text-[var(--text)] hover:brightness-110 transition"
-                >
-                  Admin
-                </Link>
-              )}
               <Link
                 to="/notifications"
                 className="p-2 rounded-lg border border-white/15 bg-white/5 hover:bg-white/10 transition text-slate-100"

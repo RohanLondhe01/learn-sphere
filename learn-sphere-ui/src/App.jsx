@@ -12,6 +12,7 @@ import { ProtectedRoute } from "./components/dashboard/ProtectedRoute";
 import ProtectedAdminRoute from "./components/admin/ProtectedAdminRoute";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminProfile from "./pages/admin/AdminProfile";
+import CoursesAdmin from "./pages/admin/CoursesAdmin";
 import LoginPage from "./pages/LoginPage";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -66,6 +67,14 @@ export default function App() {
             element={
               <ProtectedAdminRoute>
                 <AdminProfile />
+              </ProtectedAdminRoute>
+            }
+          />
+          <Route
+            path="/admin/courses"
+            element={
+              <ProtectedAdminRoute>
+                <CoursesAdmin />
               </ProtectedAdminRoute>
             }
           />

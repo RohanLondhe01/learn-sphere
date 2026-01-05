@@ -17,9 +17,7 @@ seededUsers.set("rohit@gmail.com", {
   email: "rohit@gmail.com",
   role: "student",
 });
-// Instructor is admin (change this email to match your instructor account)
-// For development only: store a plaintext password for the seeded admin account.
-// NOTE: Do NOT use plaintext passwords in production.
+
 seededUsers.set("instructor@example.com", {
   name: "Instructor",
   email: "instructor@example.com",
