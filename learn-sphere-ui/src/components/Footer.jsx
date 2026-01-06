@@ -16,10 +16,6 @@ export const Footer = () => {
             </a>
           </nav>
         </div>
-
-        <div className="text-sm text-[var(--text)]/70">
-          Built with ❤️ • LearnSphere
-        </div>
       </div>
     </footer>
   );

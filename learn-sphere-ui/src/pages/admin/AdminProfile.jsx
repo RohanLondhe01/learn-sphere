@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AdminSidebar from "../../components/admin/AdminSidebar";
-import { getUserByEmail, updateUser } from "../../components/registration/Api";
-import { normalizeEmail } from "../../components/registration/Validation";
-import { InputField } from "../../components/registration/InputField";
+// import { getUserByEmail, updateUser } from "../../components/registration/Api";
+// import { normalizeEmail } from "../../components/registration/Validation";
+// import { InputField } from "../../components/registration/InputField";
 
 export default function AdminProfile() {
   const [loading, setLoading] = useState(true);
