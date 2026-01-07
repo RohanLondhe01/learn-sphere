@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { isEmail, passwordIssues, normalizeEmail } from "./Validation";
@@ -15,11 +16,12 @@ export const RegistrationForm = () => {
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
 
-  const validateField = async (name, value) => {
+  // Pure validation for a single field—no state writes
+  const getFieldError = async (name, value, currentForm) => {
     let error = "";
 
-    if (name === "name" && !value.trim()) {
-      error = "Name is required";
+    if (name === "name") {
+      if (!value.trim()) error = "Name is required";
     }
 
     if (name === "email") {
@@ -36,30 +38,52 @@ export const RegistrationForm = () => {
       if (!value) error = "Password is required";
       else {
         const pwdIssues = passwordIssues(value);
-        if (pwdIssues.length) error = pwdIssues;
+        if (pwdIssues.length) error = pwdIssues; // array of issue strings
       }
     }
 
     if (name === "confirmPassword") {
       if (!value) error = "Confirm Password is required";
-      else if (value !== form.password) error = "Passwords do not match";
+      else if (value !== currentForm.password) error = "Passwords do not match";
     }
 
-    setErrors((prev) => ({ ...prev, [name]: error }));
+    return error;
   };
 
   const onChange = async (e) => {
     const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-    await validateField(name, value);
+    const snapshot = { ...form, [name]: value };
+    setForm(snapshot);
+
+    // Compute error for the field that changed
+    const fieldError = await getFieldError(name, value, snapshot);
+
+    // If password changed, also re-evaluate confirmPassword
+    const confirmError =
+      name === "password"
+        ? await getFieldError("confirmPassword", snapshot.confirmPassword, snapshot)
+        : errors.confirmPassword;
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: fieldError,
+      confirmPassword: confirmError,
+    }));
   };
 
+  // Validate all fields with a local object; then commit once
   const validateAll = async () => {
-    const fields = Object.keys(form);
-    for (const field of fields) {
-      await validateField(field, form[field]);
+    const nextErrors = {};
+    for (const field of Object.keys(form)) {
+      nextErrors[field] = await getFieldError(field, form[field], form);
     }
-    return Object.keys(errors).every((key) => !errors[key]);
+    setErrors(nextErrors);
+
+    // Decide validity from local errors (not from state)
+    const isValid = Object.values(nextErrors).every(
+      (err) => !err || (Array.isArray(err) && err.length === 0)
+    );
+    return isValid;
   };
 
   const onSubmit = async (e) => {
@@ -69,7 +93,7 @@ export const RegistrationForm = () => {
     const isValid = await validateAll();
     if (!isValid) {
       setSubmitting(false);
-      return;
+      return; // stop here if any error exists
     }
 
     await registerUser({
@@ -81,16 +105,13 @@ export const RegistrationForm = () => {
     const user = { name: form.name, email: normalizeEmail(form.email) };
     localStorage.setItem("learnsphere_user", JSON.stringify(user));
     localStorage.setItem("studentName", form.name);
-
     window.dispatchEvent(new Event("userUpdated"));
     navigate("/dashboard");
   };
 
   return (
     <form onSubmit={onSubmit} className="mx-auto max-w-md px-4 py-10">
-      <h2 className="text-2xl font-bold text-slate-100 mb-6">
-        Create your account
-      </h2>
+      <h2 className="text-2xl font-bold text-slate-100 mb-6">Create your account</h2>
 
       <InputField
         label="Name"
