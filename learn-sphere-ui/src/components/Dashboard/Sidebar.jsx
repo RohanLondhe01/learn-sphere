@@ -6,17 +6,15 @@ import { NavLink } from "react-router-dom";
  * - Fixed on the left; width transitions between w-16 and w-64 while hovered.
  * - Labels/chevrons/submenu reveal only when expanded (hovered).
  * - Uses app theme tokens: bg-[var(--card)], text-[var(--text)], border-[var(--border)].
- * - No changes to other files required.
  */
 
-export default function Sidebar() {
+export default function Sidebar({ enrolledCount = 0 }) {
   // Expanded while hovering
   const [expanded, setExpanded] = useState(false);
-
-  // Courses submenu (click toggles; only visible when expanded)
   const [coursesOpen, setCoursesOpen] = useState(true);
 
-  // Styles (theme-friendly)
+  // Styles (theme-frienwq
+  // dly)
   const linkBase =
     "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors";
   const linkActive = "bg-white/10 text-[var(--text)]";
@@ -63,26 +61,39 @@ export default function Sidebar() {
     </span>
   );
 
+  // Small badge for counts
+  const CountBadge = ({ count }) => {
+    if (!Number.isFinite(count) || count <= 0) return null;
+    return (
+      <span
+        className={[
+          "ml-auto inline-flex items-center justify-center",
+          "text-[0.7rem] font-semibold rounded-full",
+          "bg-blue-600/80 text-white",
+          // keep visible in both states; shift a bit when collapsed
+          expanded ? "px-2 h-5 min-w-[1.25rem]" : "px-1.5 h-5 min-w-[1.25rem]",
+        ].join(" ")}
+        aria-label={`${count} enrolled courses`}
+      >
+        {count}
+      </span>
+    );
+  };
+
   return (
     <>
-      {/* Desktop: fixed, width controlled by hover state */}
       <div
         className={[
           "hidden md:block",
-          "fixed left-0 top-0 h-screen z-30", // fixed so width isn't constrained by parent layout
+          "fixed left-0 top-0 h-screen z-30",
           "border-r border-[var(--border)] bg-[var(--card)] text-[var(--text)]",
-          // Use transition-all to ensure width animates even if transition-[width] isn't available
           "transition-all duration-200 overflow-hidden",
           expanded ? EXPANDED_W : COLLAPSED_W,
         ].join(" ")}
         onMouseEnter={() => setExpanded(true)}
         onMouseLeave={() => setExpanded(false)}
       >
-        <aside
-          role="complementary"
-          aria-label="Sidebar Navigation"
-          className="flex flex-col h-full"
-        >
+        <aside role="complementary" aria-label="Sidebar Navigation" className="flex flex-col h-full">
           {/* Header */}
           <div className="flex items-center justify-between p-3">
             <div className="flex items-center gap-3">
@@ -91,23 +102,17 @@ export default function Sidebar() {
                 className={[
                   "text-sm font-bold tracking-tight",
                   "bg-gradient-to-r from-blue-400 to-indigo-300 bg-clip-text text-transparent",
-                  expanded
-                    ? "opacity-100 translate-x-0 inline"
-                    : "opacity-0 -translate-x-1 hidden",
+                  expanded ? "opacity-100 translate-x-0 inline" : "opacity-0 -translate-x-1 hidden",
                   "transition-all duration-200",
                 ].join(" ")}
               >
                 LearnSphere
               </span>
             </div>
-            {/* No persistent toggle — hover-only per your requirement */}
           </div>
 
           {/* Navigation */}
-          <nav
-            className="mt-2 flex-1 overflow-auto ml-2"
-            aria-label="Main navigation"
-          >
+          <nav className="mt-2 flex-1 overflow-auto ml-2" aria-label="Main navigation">
             <ul className="space-y-1">
               {/* Courses (parent) */}
               <li>
@@ -120,6 +125,9 @@ export default function Sidebar() {
                     <Icon path={ICONS.courses} />
                     <Label>Courses</Label>
                   </span>
+
+                  {/* Count visible in both states */}
+                  <CountBadge count={enrolledCount} />
 
                   {/* Chevron visible only when expanded */}
                   <span
@@ -135,7 +143,7 @@ export default function Sidebar() {
                   </span>
                 </button>
 
-                {/* Submenu — renders only when expanded AND coursesOpen */}
+                {/* Submenu — only when expanded AND coursesOpen */}
                 {expanded && coursesOpen && (
                   <div className="mt-2 pl-2 pr-2">
                     <ul className="space-y-1">
@@ -146,9 +154,7 @@ export default function Sidebar() {
                       </li>
                       <li>
                         <NavLink to="/enrolled-courses" className={navClass}>
-                          <span className="text-[0.95rem]">
-                            Enrolled Courses
-                          </span>
+                          <span className="text-[0.95rem]">Enrolled Courses</span>
                         </NavLink>
                       </li>
                     </ul>
@@ -181,16 +187,8 @@ export default function Sidebar() {
               </li>
             </ul>
           </nav>
-
-          {/* Footer — only when expanded */}
-          {/* {expanded && (
-            <div className="mt-4 text-xs opacity-80">v0.1 • Sidebar</div>
-          )} */}
         </aside>
       </div>
-
-      {/* Mobile drawer: (optional) remove if not needed */}
-      {/* This answer focuses on desktop hover behavior as requested. */}
     </>
   );
 }
